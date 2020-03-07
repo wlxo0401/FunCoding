@@ -21,36 +21,72 @@ ingameLine = []
 # 중복을 걸러내기 위한 리스트
 sameStation = []
 
-# 진행 게임 설정
+
+# 진행 게임 설명
 # ======================================================================================================
-# 참여자 인원 수
-member = int(input('참여 인원을 설정해 주세요 : '))
-print(member, '명이 참여하였습니다.')
-# 몇 호선인지 선택
-print('\n호선을 선택해 주세요')
-gameLine = int(input('호선 숫자만 입력 : '))
-if gameLine == 1:
-    ingameLine = Line1
-    print('1호선 선택\n')
-    print(ingameLine)
-elif gameLine == 2:
-    ingameLine = Line2
-    print('2호선 선택\n')
-    print(ingameLine)
-else:
-    ingameLine = Line3
-    print('3호선 선택\n')
-    print(ingameLine)
-# 게임 시작
-# ======================================================================================================
-for i in range(member):
-    stationName = input('\n지하철 역 이름을 입력해주세요 : ')
-    if stationName in ingameLine:
-        if stationName in sameStation:
-            print('\n',i+1,'번 역 이름 중복. 탈락입니다!!')            
+gameRule = (''' 
+\n안녕하세요. 이 게임은 술 자리에서 즐겨하던 지하철 게임을 만들어 보았습니다.
+룰은 순서 상관없이 중복하지 않고 역 이름을 다 입력하는 것입니다. 
+중복하거나 해당 호선에서 제일 마지막으로 나온 역 이름을 입력한 사람이 벌칙을 받게 됩니다.
+
+게임 방법
+1. 게임 메뉴에서 원하시는 숫자를 입력해 다음 단계로 나아갑니다.
+메뉴 선택은 숫자만 입력해주세요. 1.게임시작을 선택시 숫자 '1'만 입력해주시면 됩니다.
+
+1. 먼저 참여 인원을 입력해주세요! 그냥 숫자로만 입력해주시면 됩니다. 
+4명이 참여 한다면 숫자 '4'만 입력해주세요
+
+2. 호선을 골라 주셔야합니다. 참여 인원과 마찬가지로 숫자만 입력해주세요. 
+3호선이면 숫자 '3'만 입력해주세요
+
+3. 지하철 역이름은 00역 이렇게 끝까지 입력을 해주시고 오타가 있으면 안됩니다.
+대화역 입력하고 싶으면 '대화역' 이렇게 입력해주세요. '대화', '데화역' 과 같은 오타는 벌칙으로 간주됩니다.
+
+''')
+
+print(gameRule)
+
+while True:
+    # 게임 초기 메뉴
+    print('1. 게임시작 2. 게임설명 3. 게임종료')
+    gameMenu = int(input('번호를 입력해주세요 : '))
+    if gameMenu == 1:
+        # 진행 게임 설정
+        # ======================================================================================================
+        # 참여자 인원 수
+        member = int(input('\n참여 인원을 설정해 주세요 : '))
+        print(member, '명이 참여하였습니다.')
+        # 몇 호선인지 선택
+        print('\n호선을 선택해 주세요')
+        gameLine = int(input('호선 숫자만 입력 : '))
+        if gameLine == 1:
+            ingameLine = Line1
+            print('1호선 선택\n')
+            print(ingameLine)
+        elif gameLine == 2:
+            ingameLine = Line2
+            print('2호선 선택\n')
+            print(ingameLine)
         else:
-            print('\n',i+1,'번 통과!')
-            sameStation.append(stationName)   
+            ingameLine = Line3
+            print('3호선 선택\n')
+            print(ingameLine)
+        # 게임 시작
+        # ======================================================================================================
+        for i in range(member):
+            stationName = input('\n지하철 역 이름을 입력해주세요 : ')
+            if stationName in ingameLine:
+                if stationName in sameStation:
+                    print('\n',i+1,'번 역 이름 중복. 탈락입니다!!\n')      
+                    break      
+                else:
+                    print('\n',i+1,'번 통과!')
+                    sameStation.append(stationName)   
+            else:
+                print('\n',i+1,'번 벌칙 당첨입니다!')
+                break
+    elif gameMenu == 2:
+        print(gameRule)
+
     else:
-        print('\n',i+1,'번 벌칙 당첨입니다!')
         break
