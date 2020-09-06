@@ -3,10 +3,14 @@ import random
 class lastword:
 
     def __init__(self):
+        # 유저 총원
         self.UserCount = 0
+        # 유저 닉네임
         self.UserList = []
+        # 게임 중 발생한 단어들
         self.WordList = []
 
+    # 유저 인원 수 입력 받기
     def userCount(self):
         while(True):
             Count = input("참여 인원 수 입력 (최대 10명): ")
@@ -19,7 +23,9 @@ class lastword:
         self.UserCount = int(Count)
         print("========================================")
 
+    # 유저 이름 입력 받기
     def userName(self):
+        # 유저 수만큼 반복
         for i in range(self.UserCount):
             while(True):
                 name = input("{}번 인원 닉네임을 입력해주세요. : ".format(i + 1))
@@ -32,6 +38,7 @@ class lastword:
                     break
         print("========================================")
 
+    # 게임 순서 정하기
     def Draw(self):
         print("순서 정하기 1. 랜덤 2. 입력순서 거꾸로 3. 입력순서")
         while(True):
@@ -57,16 +64,25 @@ class lastword:
             print("순서는 \n", self.UserList)
         print("========================================")
 
+    # 게임 시작
     def Start(self):
+        # 유저 리스트 저장
         UserList = self.UserList
+        # 패배한 유저 저장
         LoserList = []
         print("게임을 시작합니다.")
         print("========================================")
+        # 게임 턴 수 표현
         gameCount = 0
+        # 게임 시작
         while(True):
+            # 사람 한명 한명 지목
             for name in self.UserList:
+                # 실패 측정을 위한 카운트
                 LoseCount = 0
+                # 지명된 사람 턴
                 while(True):
+                    # 3회 실패 탈락
                     if LoseCount == 3:
                         print("실패 3회 초과 탈락입니다.")
                         print("\"{}\"님은 탈락입니다.".format(name))
@@ -78,6 +94,7 @@ class lastword:
                     print("{}턴 ".format(gameCount + 1) + "\"" + name + "\"" + "님 차레입니다.")
                     print("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
                     word = input("단어를 입력하세요. : ")
+                    # 문자인지 1글자인지 판단
                     if word.isalpha == False or len(word) <= 1:
                         LoseCount += 1
                         print("{}회 실패 단어를 정확하게 입력해주세요.".format(LoseCount))
